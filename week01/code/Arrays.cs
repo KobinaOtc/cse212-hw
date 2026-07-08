@@ -13,7 +13,21 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // Create an array of doubles
+        var multiples = new double [length];
+
+        // Create a loop to go through the values number and length to create values that are multiples of the number.
+        for (int i = 0; i < length; i++)
+        {
+            // Create a varible to hold the value of the multiple
+            var multiple = number * (i + 1);
+
+            // Add the multiple to the array
+            multiples[i] = multiple;
+        }
+
+        // Return the array of multiples
+        return multiples; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +43,30 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Create a conditional to check if the amount is equal to the length of the data list. If it is, return the data list as is.
+        if (amount == data.Count)
+        {
+            return;
+        }
+
+        // Create a variable to hold new rotated list
+        List<int> rotatedList = new List<int> ();
+
+        // Create a loop to go through thr values of the data list and rotate the values to the right by the amount specified.
+        for (int i = 0; i < amount; i++)
+        {
+            rotatedList.Add(data[data.Count -  amount + i]);
+        }
+
+        // Add the remaining values to the rotated list
+        for (int i = 0; i < data.Count - amount; i++)
+        {
+            rotatedList.Add(data[i]);
+        }
+
+        // Clear the data list and add the values from the roated list to the data list
+        data.Clear();
+        data.AddRange(rotatedList);
     }
 }
