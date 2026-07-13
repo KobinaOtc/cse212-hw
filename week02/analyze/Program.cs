@@ -31,7 +31,7 @@ catch (ApplicationException e) {
 }
 
 try {
-    MysteryStack2.Run("3 4 5 6 * +");
+    MysteryStack2.Run("5 3 4 +");
     Console.WriteLine("WRONG: expected ApplicationException: Invalid Case 4!");
 }
 catch (ApplicationException e) {
