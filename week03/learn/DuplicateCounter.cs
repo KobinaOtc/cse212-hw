@@ -20,11 +20,32 @@
 
         Console.WriteLine($"Number of items in the collection: {data.Length}");
         Console.WriteLine($"Number of duplicates : {CountDuplicates(data)}");
+        Console.WriteLine($"Number of dups alternate: {CountDupsAlt(data)}");
     }
 
     private static int CountDuplicates(int[] data)
     {
         // Add code here.
-        return 0;
+        // Create a hashset to store unique items
+        HashSet<int> noDups = new HashSet<int>();
+
+        // Create a loop to iterate through the data and add each item to the hashset
+        foreach(var item in data)
+        {
+            noDups.Add(item);
+        }
+        // Print the number of unique items in the hashset
+        Console.WriteLine($"Number of unique items in the collection: {noDups.Count}");
+
+        // Return the number of duplicates in the collection
+        return data.Length - noDups.Count;
+    }
+
+    private static int CountDupsAlt(int [] data)
+    {
+        // Add data to the hash set to automatically remove dups
+        HashSet<int> noDups = new HashSet<int>(data);
+        // Return the number of dups 
+        return data.Length - noDups.Count;
     }
 }
