@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 public class Translator
 {
     public static void Run()
@@ -25,6 +27,7 @@ public class Translator
     public void AddWord(string fromWord, string toWord)
     {
         // ADD YOUR CODE HERE
+        _words[fromWord] = toWord;
     }
 
     /// <summary>
@@ -35,6 +38,17 @@ public class Translator
     public string Translate(string fromWord)
     {
         // ADD YOUR CODE HERE
-        return "";
+        string newWord = "";
+
+        // Check if the word exists in the dictionary
+        if (_words.ContainsKey(fromWord))
+        {
+            newWord = _words[fromWord];
+        }
+        else
+        {
+            newWord = "???";
+        }
+        return newWord;
     }
 }
