@@ -21,8 +21,30 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var wordSet = new HashSet<string>();
+        var pairs = new List<string>();
+
+        foreach (var word in words)
+        {
+            // 1. Fast string reversal without using LINQ
+            char[] charArray = word.ToCharArray();
+            Array.Reverse(charArray);
+            string reversedWord = new string(charArray);
+
+            // 2. If the set already contains the reversed word, it's a match!
+            if (wordSet.Contains(reversedWord))
+            {
+                // Note: The expected output formats the pair as "currentWord & reversedWord"
+                pairs.Add($"{word} & {reversedWord}");
+            }
+            else
+            {
+                // 3. If not, add the current word to the set to check against future words
+                wordSet.Add(word);
+            }
+        }
+        
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -43,8 +65,19 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
-        }
+            // Add code to summarize the degrees in the file and return a dictionary where the key is the degree
+            // and the value is the number of people that have earned that degree.  The degree information is in the 4th column of the file.  There is no header row in the
 
+            var degree = fields[3].Trim();
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
+        }
         return degrees;
     }
 
@@ -67,7 +100,60 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // Add code to determine if the two words are anagrams of each other. It should ignore spaces and be case insensitive. 
+        // Use a dictionary to count the occurrences of each letter in bothwords and compare the counts. Return true if they are anagrams,
+        // else return false.
+
+        var letterCount = new Dictionary<char, int>();
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        if (word1.Length != word2.Length)
+        {
+            return false;
+        }
+        else
+        {
+            // Count the occurrences of each letter in word1
+            foreach (var letter in word1)
+            {
+                // If the letter is already in the dictionary, increment its count
+                if (letterCount.ContainsKey(letter))
+                {
+                    // Increment the count for the letter
+                    letterCount[letter]++;
+                }
+                else
+                {
+                    letterCount[letter] = 1;
+                }
+            }
+
+            if (letterCount.Count != word2.Distinct().Count())
+            {
+                return false;
+            }
+            else
+            {
+                // Check if the occurances of each letter in word2 matches any letter in the dictionary
+                foreach (var letter in word2)
+                {
+                    if (letterCount.ContainsKey(letter))
+                    {
+                        letterCount[letter]--;
+                        if (letterCount[letter] < 0)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
 
     /// <summary>
@@ -101,6 +187,19 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+
+        List<string> result = new List<string>();
+        foreach (var feature in featureCollection.Features)
+        {
+            string place = feature.Properties?.Place ?? "Unknown Location";
+
+            // Format the magnitude, handling any potential null values
+            string magnitude = feature.Properties?.Mag.HasValue == true
+                ? feature.Properties.Mag.Value.ToString()
+                : "Unknown Magnitude";
+            
+            result.Add($"{place} - Mag {magnitude}");
+        }
+        return result.ToArray();
     }
 }
